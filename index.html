@@ -37,13 +37,13 @@
         <div class="col-md-4">
             <div class="withdraw status">
                 <h5>Withdraw</h5>
-                <h2>$00</h2>
+                <h2> $ <span id="currentWithdraw">00</span> </h2>
             </div>
         </div>
         <div class="col-md-4">
             <div class="balance status">
                 <h5>Balance</h5>
-                <h2>$1200</h2>
+                <h2>$<span id = "currentBalance">1240</span></h2>
             </div>
         </div>
     </div>
@@ -60,7 +60,7 @@
                 <div class="form">
                     <h2>Withdraw</h2>
             <input id='withdrawAmount' type="text" class="form-control" placeholder="$Amount you want to withdraw">
-            <button id= "withdrawBtn" class=" btn btn-success">Withdraw</button>
+            <button id= "addWithdraw" class=" btn btn-success">Withdraw</button>
             </div>
                 </div>
             
@@ -78,21 +78,48 @@
         })
         // deposit btn
             var depositBtn= document.getElementById('depositBtn')
-           document.addEventListener('click',function(){
-            var   depositAmount=document.getElementById("depositAmount").value;
-             var  depositNumber =parseFloat(depositAmount)
-            
-            var currentDeposit=document.getElementById("currentDeposit").innerText
-           var currentDepositNumber=parseFloat(currentDeposit);
-         var totalDeposit=depositNumber + currentDepositNumber;
-         console.log(totalDeposit);
-           
-                      
-        document.getElementById("currentDeposit").innerText = totalDeposit
-           }
+           depositBtn.addEventListener('click',function(){
+           var depositNumber = withdrawTask('depositAmount')
           
+                makeSmall('currentDeposit',depositNumber)
+                makeSmall('currentBalance',depositNumber)
+           
+           
+        document.getElementById("depositAmount").value="";
+
+           }
            )
-            
+           //withdraw handler
+           var withdrawBtn= document.getElementById('addWithdraw')
+           withdrawBtn.addEventListener('click' , function(){
+            var  withdrawNumber=  withdrawTask('withdrawAmount')
+             makeSmall('currentWithdraw',withdrawNumber)
+             makeSmall( 'currentBalance',-1 * withdrawNumber )
+             document.getElementById('withdrawAmount').value="";
+           })
+           function withdrawTask(id){
+          var  withdrawAmount=document.getElementById(id).value
+           var    withdrawNumber=parseFloat(withdrawAmount)
+            return  withdrawNumber;
+           }
+
+            withdrawBtn.addEventListener('click',function(){
+                var withdrawAmount=document.getElementById('withdrawAmount').value
+                    withdrawNumber=parseFloat(withdrawAmount)
+                    
+            })
+               
+             var withdrawBtn =document.getElementById('addWithdraw')
+                
+
+        function makeSmall(id,depositNumber){
+            var currentBalance =document.getElementById(id).innerText
+            var  currentBalanceNumber= parseFloat(currentBalance);
+            var    totalBalance= depositNumber + currentBalanceNumber
+          
+            document.getElementById(id).innerText=totalBalance
+
+        }            
 
        
     </script>
